@@ -54,7 +54,13 @@ app.use("/", (req, res, next) => {
 });
 // note : root '/'
 app.get("/", (req, res) => {
-  res.send("<h1>Ini Halaman Utama</h1>");
+  const contacts = loadContacts();
+  res.render('contacts', {
+    title: "Contacts Page",
+    layout: "layouts/main-component",
+    contacts,
+    msg: req.flash("msg"),
+  })
 });
 
 // display data contacts
@@ -161,7 +167,7 @@ app.post(
     } else {
       updateContact(req.body);
       // kirimkan flash message
-      req.flash("msg", "Data Contact Berhasil Di Perbaharui");
+      req.flash("msg", "Data Contact Berhasil Di Perbarui");
       res.redirect("/contacts");
     }
   }
